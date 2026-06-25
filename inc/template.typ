@@ -55,7 +55,7 @@
   // ------------------------------------------------------------
 
   set text(
-    font: "Arial",
+    font: "Segoe UI",
     size: if paper == "a5" { 10pt } else { 11pt },
     top-edge: "cap-height",
     bottom-edge: "baseline",
