@@ -1,0 +1,32 @@
+name: Build Typst document
+on: 
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: checkout fonts repo
+        uses: actions/checkout@v6
+        with:
+          repository: ckunte/fonts
+          path: fonts
+
+      - name: prep typst
+        uses: typst-community/setup-typst@v5
+      - run: typst compile main.typ --font-path=fonts
+
+      - name: release
+        uses: softprops/action-gh-release@v3
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            py-on-win-11.pdf
